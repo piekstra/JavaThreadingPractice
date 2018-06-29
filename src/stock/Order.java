@@ -1,8 +1,9 @@
 package stock;
 
+import java.util.Comparator;
 import java.util.UUID;
 
-public class Order {	
+public class Order implements Comparator<Order>{	
 	// Price per share
 	private double _pps;	
 	// Volume
@@ -10,13 +11,23 @@ public class Order {
 	
 	private OrderType _type;
 	
+	private OrderStatus _status;
+	
+	private Stock _stock;
+	
 	private UUID _id;
 	
-	public Order(double pricePerShare, double volume, OrderType orderType) {
+	public Order(Stock stock, double pricePerShare, double volume, OrderType orderType) {
+		_stock = stock;
 		_pps = pricePerShare;
-		_vol = volume;
+		_vol = volume;		
 		_type = orderType;
+		_status = OrderStatus.Open;
 		_id = UUID.randomUUID();
+	}
+	
+	public Stock GetStock() {
+		return _stock;
 	}
 	
 	public double GetPricePerShare() {
@@ -31,7 +42,19 @@ public class Order {
 		return _type;
 	}
 	
+	public OrderStatus GetOrderStatus() {
+		return _status;
+	}
+	
 	public UUID GetId() {
 		return _id;
+	}
+
+	@Override
+	public int compare(Order order1, Order order2) {
+		if (_type == OrderType.LimitBuy || _type == OrderType.MarketBuy) {
+			return 
+		}
+		return 0;
 	}
 }
